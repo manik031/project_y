@@ -36,7 +36,7 @@ def add_text_and_logo_to_image_bytes(image_bytes, text, font_path, logo_bytes):
 
         draw.text(text_position, text, font=font, fill=text_color)
 
-        logo = Image.open(BytesIO(logo_bytes)).resize((55, 55))  # Resize the logo
+        logo = Image.open(BytesIO(logo_bytes)).resize((110, 60))  # Resize the logo
         padding = 10
         img_width, img_height = image.size
         logo_width, logo_height = logo.size

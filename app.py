@@ -97,20 +97,19 @@ def generate_image():
         email = request.form['email']
         city = request.form['city']
 
-        if not all([name, surname, age, email, city]):
+        scene = request.form ['select_scene']
+
+        if scene == 'gym':
+            create_image = gym_image
+        else:
+            create_image = beach_image
+
+        if not all([name, surname, age, email, city, create_image]):
             raise ValueError("Incomplete form data")
 
         user_image = request.files.get('image')
         if not user_image:
             raise ValueError("No image file provided")
-
-        image_data = user_image.read()
-
-        # Now you can use BytesIO to work with the image as bytes
-        # print(image_data)
-
-        user_image = BytesIO(image_data)
-        print(user_image)
 
 
         # Specify the file path for saving the PNG file
@@ -120,10 +119,6 @@ def generate_image():
         user_image = Image.open("temp_image.jpg")
 
 
-
-        # user_image = Image.open(user_image)
-
-        # Remove background from an image
         background_removed_image = remove_background(Config.REMOVE_BACKGROUND_KEY, user_image, Config.API_URL)
 
         s3_client = create_s3_connection(Config.aws_access_key_id, Config.aws_secret_access_key, Config.region)
@@ -136,7 +131,7 @@ def generate_image():
         presigned_image_list = []
         
 
-        for character_image in [beach_image, gym_image]:
+        for character_image in [create_image]:
             barbie_image_urls = [presigned_url, character_image]
             
             
@@ -180,7 +175,7 @@ def generate_image():
             "generated_images": {
                 "gym1": quadrant_image_list[0],
                 # "gym2": quadrant_image_list[1],
-                "beach1": quadrant_image_list[1],
+                # "beach1": quadrant_image_list[1],
                 # "beach2": quadrant_image_list[3]
             }
         }
@@ -258,7 +253,7 @@ def generate_image():
             </body>
             </html>
             """
-        image_paths = ['image1.png', 'image2.png']
+        image_paths = ['image1.png']
         # Send an email with the generated image
         email_status = send_email(Config.SENDER_EMAIL, email, Config.SUBJECT, email_message,base64_list, image_paths, Config.SENDER_PASSWORD)
         logger.info("Email status == %s", email_status)
