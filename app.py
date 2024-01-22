@@ -110,11 +110,11 @@ def generate_image():
         user_image = request.files.get('image')
         if not user_image:
             raise ValueError("No image file provided")
-
-
+        
+        print(user_image)
         # Specify the file path for saving the PNG file
         with open("temp_image.jpg", "wb") as temp_file:
-            temp_file.write(user_image.getvalue())
+            temp_file.write(user_image.read())
 
         user_image = Image.open("temp_image.jpg")
 
