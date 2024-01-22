@@ -23,6 +23,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
+app.config['MAX_CONTENT_LENGTH'] =6 * 1024 * 1024
+
 class Config:
     # Set your OpenAI API key
     MIDJOURNEY_KEY = os.getenv("MIDJOURNEY_API_KEY")
@@ -86,7 +88,9 @@ def generate_image():
             
         logger.info("Generating using Midjourney")
 
-                # Extract data from the request
+        # Extract data from the request
+        scene = request.form ['select_scene']
+        print("scene",scene)
         name = request.form ['name']
         surname = request.form['surname']
         age = request.form['age']

@@ -72,23 +72,23 @@ body {
 .group-item {
   border-radius: 83px;
   background-color: #1f1f1f;
-  border: 6px solid rgba(255, 67, 161, 0.8);
+  border: 5px solid rgba(255, 67, 161, 0.8);
   box-sizing: border-box;
 }
 .form_text{
   color: #FFF;
-  font-family: Montserrat;
+  /* font-family: Montserrat; */
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 
 }
-input{
+input, select{
   border: 0;
   outline: 0;
   border-radius: 4px;
-  height: 55px;
+  height: 50px;
 }
 .radio-button{
   width: 100%;

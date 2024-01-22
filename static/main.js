@@ -20,6 +20,7 @@ profiteInputButton.addEventListener("change", function () {
 });
 
 // validation
+let select_scene = document.getElementById("select_scene");
 let user_name = document.getElementById("name");
 let surname = document.getElementById("surname");
 let age = document.getElementById("age");
@@ -77,11 +78,20 @@ email.addEventListener("keyup", function (e) {
         email.style.border = "3px solid #DC4C64";
     }
 });
+
 checkbox.addEventListener("change", (event) => {
     if (event.currentTarget.checked) {
         document.getElementById("checkbox_label").style.color = "#14A44D";
     } else {
         document.getElementById("checkbox_label").style.color = "#DC4C64";
+    }
+});
+
+select_scene.addEventListener("change", (event) => {
+    if (select_scene.value != '') {
+        select_scene.style.border = "3px solid #14A44D";
+    } else {
+        select_scene.style.border = "3px solid #DC4C64";
     }
 });
 
@@ -94,6 +104,11 @@ function validate() {
     if (files.length === 0) {
         alert("Please choose a file first...");
         status= false;
+    }
+
+    if (select_scene.value === '') {
+        select_scene.style.border = "3px solid #DC4C64";
+        status = false;
     }
 
     if (!pattern.test(user_name.value)) {
@@ -163,6 +178,8 @@ function generateImage() {
     formData.append("city", city.value);
     formData.append("email", email.value);
     formData.append("gender", gender.value);
+
+    formData.append("select_scene", select_scene.value);
 
     // Send the image to the server for generation
 
