@@ -195,27 +195,20 @@ function generateImage() {
             // Display the generated images
             var generatedImagesElement_1 = document.getElementById("generate_img_1");
             generatedImagesElement_1.innerHTML = "";
-    
-            var generatedImagesElement_2 = document.getElementById("generate_img_2");
-            generatedImagesElement_2.innerHTML = "";
-    
+
             if (data && data.success && data.data !== null) {
                 generats.style.display = "block";
     
                 // Create image elements
                 var imageElement_1 = createImageElement("data:image/png;base64," + data.data[0]);
-                var imageElement_2 = createImageElement("data:image/png;base64," + data.data[1]);
     
                 // Store image URLs
                 window.img1 = imageElement_1.src;
-                window.img2 = imageElement_2.src;
     
-                window.img1_url = data.data[2];
-                // window.img2_url = data.data[3];
+                window.img1_url = data.data[1];
     
                 // Append image elements to the DOM
                 generatedImagesElement_1.appendChild(imageElement_1);
-                generatedImagesElement_2.appendChild(imageElement_2);
             } else {
                 // Display error message
                 display_error.style.display = "block";
@@ -239,52 +232,33 @@ function generateImage() {
 function createImageElement(src) {
     var imageElement = document.createElement("img");
     imageElement.src = src;
-    imageElement.style.width = "155px";
-    imageElement.style.height = "155px";
+    imageElement.style.width = "170px";
+    imageElement.style.height = "185px";
     imageElement.classList.add("img-fluid");
     return imageElement;
 }
 
-// Download images
-function downloadImages() {
-    // Create a new JSZip instance
-    var zip = new JSZip();
+function downloadImage() {
+    // Base64-encoded image string
+    var base64Image = img1; 
 
-    // Add the first image to the zip file
-    zip.file("image1.png", base64toBlob(img1));
+    // Create a link element
+    var downloadLink = document.createElement("a");
 
-    // Add the second image to the zip file
-    zip.file("image2.png", base64toBlob(img2));
+    // Set the href attribute with the Base64 image string
+    downloadLink.href = base64Image;
 
-    // Generate the zip file
-    zip.generateAsync({ type: "blob" })
-        .then(function (blob) {
-            // Create a download link
-            var link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "images.zip";
+    // Set the download attribute with the desired filename
+    downloadLink.download = "image.png";
 
-            // Append the link to the body and click it
-            document.body.appendChild(link);
-            link.click();
+    // Append the link to the document
+    document.body.appendChild(downloadLink);
 
-            // Remove the link from the DOM
-            document.body.removeChild(link);
-        })
-        .catch(function (error) {
-            console.error("Error generating zip file:", error);
-        });
-}
+    // Programmatically click the link to trigger the download
+    downloadLink.click();
 
-function base64toBlob(base64Data) {
-    const byteString = atob(base64Data.split(',')[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: 'image/png' });
+    // Remove the link from the document
+    document.body.removeChild(downloadLink);
 }
 
 // Share images
