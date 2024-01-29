@@ -279,6 +279,9 @@ font-size: 30px;
 cursor: pointer;
 }
 
+.scene-text{
+  max-width: 73%;
+}
 /*responsive*/
 @media(max-width: 767px){
 .popup .box{
@@ -290,6 +293,9 @@ cursor: pointer;
 .popup .box .form{
   flex: 0 0 100%;
       max-width: 100%;
+}
+.scene-text{
+  max-width: 100%;
 }
 }
 

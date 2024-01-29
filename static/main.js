@@ -28,8 +28,8 @@ let city = document.getElementById("city");
 let email = document.getElementById("email");
 let checkbox = document.getElementById("validationFormCheck1");
 
-let pattern = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-let mailformat =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+var pattern = /^[A-Za-z\s]+$/;
+let mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function form_validate() {
     var flag = validate();
@@ -40,7 +40,7 @@ function form_validate() {
 
 //Live form validation
 user_name.addEventListener("keyup", function (e) {
-    if (user_name.value.match(pattern) || user_name.value.length != 0) {
+    if (user_name.value.match(pattern) && user_name.value.trim() != "") {
         user_name.style.border = "3px solid #14A44D";
     } else {
         user_name.style.border = "3px solid #DC4C64";
@@ -48,7 +48,7 @@ user_name.addEventListener("keyup", function (e) {
 });
 
 surname.addEventListener("keyup", function (e) {
-    if (surname.value.match(pattern) || surname.value.length != 0) {
+    if (surname.value.match(pattern) && surname.value.trim() != "") {
         surname.style.border = "3px solid #14A44D";
     } else {
         surname.style.border = "3px solid #DC4C64";
@@ -56,7 +56,7 @@ surname.addEventListener("keyup", function (e) {
 });
 
 age.addEventListener("keyup", function (e) {
-    if ((age.value > 0 && age.value < 70) || age.value.length != 0) {
+    if ((age.value > 0 && age.value < 100) && age.value.length != 0) {
         age.style.border = "3px solid #14A44D";
     } else {
         age.style.border = "3px solid #DC4C64";
@@ -64,7 +64,7 @@ age.addEventListener("keyup", function (e) {
 });
 
 city.addEventListener("keyup", function (e) {
-    if (city.value.match(pattern) || age.value.length != 0) {
+    if (city.value.trim() != "") {
         city.style.border = "3px solid #14A44D";
     } else {
         city.style.border = "3px solid #DC4C64";
@@ -72,7 +72,7 @@ city.addEventListener("keyup", function (e) {
 });
 
 email.addEventListener("keyup", function (e) {
-    if (mailformat.test(email.value) || email.value.length != 0) {
+    if (mailformat.test(email.value) &&  email.value.length != 0) {
         email.style.border = "3px solid #14A44D";
     } else {
         email.style.border = "3px solid #DC4C64";
@@ -111,19 +111,19 @@ function validate() {
         status = false;
     }
 
-    if (!pattern.test(user_name.value)) {
+    if (!pattern.test(user_name.value) || user_name.value.trim() === "" || !/\S/.test(user_name.value)) {
         user_name.style.border = "3px solid #DC4C64";
         status = false;
     } 
-    if (!pattern.test(surname.value)) {
+    if (!pattern.test(surname.value) || surname.value.trim() === "" || !/\S/.test(surname.value)) {
         surname.style.border = "3px solid #DC4C64";
         status = false;
     } 
-    if (age.value <= 0 || age.value >= 70) {
+    if (age.value <= 0 || age.value >= 100) {
         age.style.border = "3px solid #DC4C64";
         status = false;
     } 
-    if (!pattern.test(city.value)) {
+    if (city.value.trim() === "" || !/\S/.test(city.value)) {
         city.style.border = "3px solid #DC4C64";
         status = false;
     }
@@ -224,8 +224,23 @@ function generateImage() {
             console.error("Error:", error);
         });
     
-    // Reset form data
+     // Reset form data
+     resetForm();
+}
+
+function resetForm() {
+
     document.getElementById("generate_form").reset();
+    // Resetting border color of all input fields on form reset
+
+    document.getElementById("checkbox_label").style.color = "#fff"; // Resetin color of check boxe.
+    select_scene.style.borderColor = ""; // Resetting border color of select input fields.
+    var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type === 'text' || inputs[i].type === 'email' || inputs[i].type === 'checkbox' || inputs[i].type === 'number') {
+            inputs[i].style.borderColor = "";
+        }
+    }
 }
 
 // Function to create an image element
