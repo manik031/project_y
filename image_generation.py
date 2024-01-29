@@ -17,7 +17,7 @@ def create_barbie_image(api_key, image_urls):
     
     data = {
         "image_urls": image_urls,
-        "process_mode": "turbo",
+        "process_mode": "relax",
         "webhook_endpoint": "",
         "webhook_secret": ""
     }
