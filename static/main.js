@@ -203,8 +203,7 @@ function generateImage() {
                 var imageElement_1 = createImageElement("data:image/png;base64," + data.data[0]);
     
                 // Store image URLs
-                window.img1 = imageElement_1.src;
-    
+                window.img1 = "data:image/png;base64," + data.data[0];    
                 window.img1_url = data.data[1];
     
                 // Append image elements to the DOM
@@ -278,25 +277,50 @@ function downloadImage() {
 
 // Share images
 const shareButton = document.getElementById('shareButton');
-    // Add click event listener to the share button
-    shareButton.addEventListener('click', async () => {
-        try {
-            // Check if the navigator supports the Share API
-            if (navigator.share) {
-                // Use the Share API to trigger the native sharing dialog
-                await navigator.share({
-                    title: 'Share Image',
-                    text: 'Check out this generated image!',
-                    url: img1_url
-                });
-            } else {
-                // Fallback for browsers that do not support the Share API
-                alert('Sorry, your browser does not support the Share API.');
-            }
-        } catch (error) {
-            console.error('Error sharing image:', error);
+shareButton.addEventListener('click', async () => {
+    try {
+        // Check if the Web Share API is supported by the browser
+        if (navigator.share) {
+            // Get the image element
+            // const imageElement = document.getElementById('sharedImage');
+            
+            // Create a new Blob object from the image URL
+            const blob = await fetch(img1).then(response => response.blob());
+            
+            // Share the image using the Web Share API
+            await navigator.share({
+                files: [new File([blob], 'herbex_ignite.jpg', { type: blob.type })],
+                title: 'Share Image',
+                text: 'Check out this generated image!',
+            });
+        } else {
+            // Web Share API not supported, provide fallback
+            alert('Web Share API is not supported in this browser.');
         }
-    });
+    } catch (error) {
+        console.error('Error sharing image:', error);
+    }
+});
+// const shareButton = document.getElementById('shareButton');
+//     // Add click event listener to the share button
+//     shareButton.addEventListener('click', async () => {
+//         try {
+//             // Check if the navigator supports the Share API
+//             if (navigator.share) {
+//                 // Use the Share API to trigger the native sharing dialog
+//                 await navigator.share({
+//                     title: 'Share Image',
+//                     text: 'Check out this generated image!',
+//                     url: img1_url
+//                 });
+//             } else {
+//                 // Fallback for browsers that do not support the Share API
+//                 alert('Sorry, your browser does not support the Share API.');
+//             }
+//         } catch (error) {
+//             console.error('Error sharing image:', error);
+//         }
+//     });
 
 // Share Popup 
 // const section = document.querySelector(".share_popup"),
