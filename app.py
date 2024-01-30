@@ -236,12 +236,12 @@ def generate_image():
             <body>
                 <div class='container'>
                 <div class='header'>
-                    <h2>Download Your Images</h2>
+                    <h2>Download Your Image</h2>
                 </div>
                 <div class='content'>
                     <p>Thank you for having some fun with us!</p>
                     <p>We hope that you enjoyed igniting your hottest shape with our AI-image generator!</p>
-                    <p>Please click <a href='https://google.com'>here</a> to download your FREE RESOURCES to ignite your hottest shape in 2024!
+                    <p>Please click <a href='https://herbex.co.za'>here</a> to download your FREE RESOURCES to ignite your hottest shape in 2024!
                     We have included exercise routines, eating plans, and more!</p>
                     <p>Our Herbex Team is on standby, should you need any information on products or advice on how to shed those extra kilos!</p>
                     <p>All the best, <br/>THE HERBEX TEAM</p>
