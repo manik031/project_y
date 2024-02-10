@@ -285,13 +285,15 @@ shareButton.addEventListener('click', async () => {
             // const imageElement = document.getElementById('sharedImage');
             
             // Create a new Blob object from the image URL
-            const blob = await fetch(img1).then(response => response.blob());
+            // const blob = await fetch(img1).then(response => response.blob());
             
             // Share the image using the Web Share API
             await navigator.share({
-                files: [new File([blob], 'herbex_ignite.jpg', { type: blob.type })],
-                title: 'Share Image',
-                text: 'Check out this generated image!',
+                // files: [new File([blob], 'herbex_ignite.jpg', { type: blob.type })],
+                text: 'Click the link below to ignite your hottest shape too!',
+                url: 'https://ignite-me.onrender.com',
+                // title: 'Share Image',
+                // text: 'Check out this generated image!',
             });
         } else {
             // Web Share API not supported, provide fallback
